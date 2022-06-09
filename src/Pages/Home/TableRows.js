@@ -4,7 +4,7 @@ const TableRows = ({ user }) => {
     return (
         <tr>
             <td>{user.profile.name}</td>
-            <td>Quality Control Specialist</td>
+            <td>{user.email}</td>
             <td>Blue</td>
         </tr>
     );
