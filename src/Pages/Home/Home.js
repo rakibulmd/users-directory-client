@@ -54,13 +54,12 @@ const Home = () => {
             const pageCountValue = Math.ceil(data.count / pageSize);
             setPageCount(pageCountValue);
             setUserCount(data.count);
-            console.log(currentPage, pageCountValue);
             if (pageCountValue <= currentPage) {
-                setCurrentPage(0);
+                setCurrentPage(pageCount - 1);
             }
         };
         get();
-    }, [pageSize, setPageCount, setUserCount, currentPage]);
+    }, [pageSize, setPageCount, setUserCount, currentPage, pageCount]);
 
     return (
         <div className="bg-gradient-to-r from-primary to-secondary min-h-screen text-white">
@@ -133,7 +132,11 @@ const Home = () => {
                 </table>
             </div>
             <div className="btn-group flex justify-center py-3 mb-12">
-                <button className="btn btn-secondary text-black hover:bg-primary hover:text-white">
+                <button
+                    disabled={currentPage === 0}
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    className="btn btn-secondary text-black hover:bg-primary hover:text-white"
+                >
                     Previous
                 </button>
                 {[...Array(pageCount).keys()].map((number) => (
@@ -149,7 +152,11 @@ const Home = () => {
                         {number + 1}
                     </button>
                 ))}
-                <button className="btn  btn-secondary hover:bg-primary hover:text-white text-black">
+                <button
+                    disabled={currentPage + 1 === pageCount}
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    className="btn  btn-secondary hover:bg-primary hover:text-white text-black"
+                >
                     Next
                 </button>
             </div>
