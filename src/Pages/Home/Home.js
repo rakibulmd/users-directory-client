@@ -131,34 +131,47 @@ const Home = () => {
                     </tbody>
                 </table>
             </div>
-            <div className="btn-group flex justify-center py-3 mb-12">
-                <button
-                    disabled={currentPage === 0}
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                    className="btn btn-secondary text-black hover:bg-primary hover:text-white"
-                >
-                    Previous
-                </button>
-                {[...Array(pageCount).keys()].map((number) => (
+            <div className="p-5 flex justify-between">
+                <div>
+                    <p className="text-xl">
+                        Showing {`${pageSize * currentPage + 1} `} to{" "}
+                        {`${
+                            pageSize * (currentPage + 1) <= usersCount
+                                ? pageSize * (currentPage + 1)
+                                : usersCount
+                        } `}{" "}
+                        of {usersCount} entries{" "}
+                    </p>
+                </div>
+                <div className="btn-group flex py-3 mb-12">
                     <button
-                        className={
-                            currentPage === number
-                                ? "btn  bg-primary border-white border-2 hover:bg-primary text-white hover:text-white hover:border-white"
-                                : "btn bg-white border-0 text-black hover:bg-white/50"
-                        }
-                        onClick={() => setCurrentPage(number)}
-                        key={number}
+                        disabled={currentPage === 0}
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        className="btn btn-success text-black hover:bg-primary hover:text-white"
                     >
-                        {number + 1}
+                        Previous
                     </button>
-                ))}
-                <button
-                    disabled={currentPage + 1 === pageCount}
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    className="btn  btn-secondary hover:bg-primary hover:text-white text-black"
-                >
-                    Next
-                </button>
+                    {[...Array(pageCount).keys()].map((number) => (
+                        <button
+                            className={
+                                currentPage === number
+                                    ? "btn  bg-primary border-white border-2 hover:bg-primary text-white hover:text-white hover:border-white"
+                                    : "btn bg-white border-0 text-black hover:bg-white/50"
+                            }
+                            onClick={() => setCurrentPage(number)}
+                            key={number}
+                        >
+                            {number + 1}
+                        </button>
+                    ))}
+                    <button
+                        disabled={currentPage + 1 === pageCount}
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        className="btn  btn-success hover:bg-primary hover:text-white text-black"
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
         </div>
     );
