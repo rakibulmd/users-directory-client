@@ -15,9 +15,6 @@ const Home = () => {
     const handlePageSizeChange = (event) => {
         event.preventDefault();
         setPageSize(event.target.value);
-        if (pageSize < currentPage) {
-            setCurrentPage(0);
-        }
     };
 
     const handleNameAscending = (event) => {
@@ -54,16 +51,21 @@ const Home = () => {
             const { data } = await axios.get(
                 `http://localhost:5000/customerCount`
             );
-            setPageCount(Math.ceil(data.count / pageSize));
+            const pageCountValue = Math.ceil(data.count / pageSize);
+            setPageCount(pageCountValue);
             setUserCount(data.count);
+            console.log(currentPage, pageCountValue);
+            if (pageCountValue <= currentPage) {
+                setCurrentPage(0);
+            }
         };
         get();
-    }, [pageSize, setPageCount, setUserCount]);
+    }, [pageSize, setPageCount, setUserCount, currentPage]);
 
     return (
         <div className="bg-gradient-to-r from-primary to-secondary min-h-screen text-white">
-            <Header></Header>
-            <div className="text-center text-3xl md:text-5xl mt-12">
+            {/* <Header></Header> */}
+            <div className="text-center text-3xl md:text-5xl pt-12">
                 <h2>All Users</h2>
             </div>
             <div className="flex justify-start items-center px-5 py-3 gap-2">
@@ -72,9 +74,9 @@ const Home = () => {
                     onChange={handlePageSizeChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-700 block w-24 p-2.5"
                 >
-                    <option selected>5</option>
                     <option>10</option>
-                    <option>15</option>
+                    <option>25</option>
+                    <option>50</option>
                 </select>
                 <span>entries</span>
             </div>
@@ -131,12 +133,15 @@ const Home = () => {
                 </table>
             </div>
             <div className="btn-group flex justify-center py-3 mb-12">
+                <button className="btn btn-secondary text-black hover:bg-primary hover:text-white">
+                    Previous
+                </button>
                 {[...Array(pageCount).keys()].map((number) => (
                     <button
                         className={
                             currentPage === number
-                                ? "btn  bg-primary hover:bg-primary text-white hover:text-white"
-                                : "btn"
+                                ? "btn  bg-primary border-white border-2 hover:bg-primary text-white hover:text-white hover:border-white"
+                                : "btn bg-white border-0 text-black hover:bg-white/50"
                         }
                         onClick={() => setCurrentPage(number)}
                         key={number}
@@ -144,6 +149,9 @@ const Home = () => {
                         {number + 1}
                     </button>
                 ))}
+                <button className="btn  btn-secondary hover:bg-primary hover:text-white text-black">
+                    Next
+                </button>
             </div>
         </div>
     );
