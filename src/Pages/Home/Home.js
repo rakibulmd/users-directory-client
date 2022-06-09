@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Header from "../Shared/Header";
 import TableRows from "./TableRows";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
+import PaginationBtn from "../../Components/PaginationBtn";
+import TableFooter from "../../Components/TableFooter";
 
 const Home = () => {
     const [users, setUsers] = useState([]);
@@ -17,23 +19,37 @@ const Home = () => {
         setPageSize(event.target.value);
     };
 
-    const handleNameAscending = (event) => {
-        event.preventDefault();
-        const newUsers = users.sort((a, b) =>
-            a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
-        );
-        setUsers(newUsers);
-        setActiveFilter("nameAscending");
+    const handleFilter = (object) => {
+        // let newUsers;
+        // if (object.mode === 1) {
+        //     newUsers = users.sort((a, b) =>
+        //         a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+        //     );
+        // } else if (object.mode === -1) {
+        //     newUsers = users.sort((a, b) =>
+        //         a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1
+        //     );
+        // }
+        // setUsers(newUsers);
+        const getData = async () => {
+            await axios
+                .get(
+                    `http://localhost:5000/customers?page=${currentPage}&pagesize=${pageSize}&mode=${object.mode}&sort=${object.filter}`
+                )
+                .then((response) => setUsers(response.data))
+                .catch((error) => console.log(error));
+        };
+        getData();
+        setActiveFilter(object.filter + object.mode);
     };
 
-    const handleNameDescending = (event) => {
-        event.preventDefault();
-        const newUsers = users.sort((a, b) =>
-            a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1
-        );
-        setUsers(newUsers);
-        setActiveFilter("nameDescending");
-    };
+    // const handleNameDescending = (object) => {
+    //     const newUsers = users.sort((a, b) =>
+    //         a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1
+    //     );
+    //     setUsers(newUsers);
+    //     setActiveFilter(object.filter + object.mode);
+    // };
 
     useEffect(() => {
         const getData = async () => {
@@ -79,32 +95,39 @@ const Home = () => {
                 </select>
                 <span>entries</span>
             </div>
-            <div class="overflow-x-auto p-5 text-black">
-                <table class="table table-zebra table-compact w-full">
+            <div className="overflow-x-auto p-5 text-black">
+                <table className="table table-zebra table-compact w-full">
                     <thead>
                         <tr>
-                            <th
-                                id="#name"
-                                className="flex items-center justify-between"
-                            >
+                            <th className="hidden"></th>
+                            <th className="flex items-center justify-between">
                                 <span>Name</span>
                                 <span className="flex flex-col">
-                                    <span className="nameUp">
+                                    <span>
                                         <FaCaretUp
-                                            onClick={handleNameAscending}
+                                            onClick={() =>
+                                                handleFilter({
+                                                    filter: "name",
+                                                    mode: 1,
+                                                })
+                                            }
                                             className={`${
-                                                activeFilter === "nameAscending"
+                                                activeFilter === "name1"
                                                     ? "text-gray-900 w-4 h-4 inline"
                                                     : "text-gray-400 w-4 h-4 inline"
                                             }`}
                                         />
                                     </span>
-                                    <span className="nameDown">
+                                    <span>
                                         <FaCaretDown
-                                            onClick={handleNameDescending}
+                                            onClick={() =>
+                                                handleFilter({
+                                                    filter: "name",
+                                                    mode: -1,
+                                                })
+                                            }
                                             className={`${
-                                                activeFilter ===
-                                                "nameDescending"
+                                                activeFilter === "name-1"
                                                     ? "text-gray-900 w-4 h-4 inline"
                                                     : "text-gray-400 w-4 h-4 inline"
                                             }`}
@@ -120,18 +143,14 @@ const Home = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* <tr>
-                            <td>Cy Ganderton</td>
-                            <td>Quality Control Specialist</td>
-                            <td>Blue</td>
-                        </tr> */}
                         {users.map((user, i) => (
                             <TableRows key={i} user={user}></TableRows>
                         ))}
                     </tbody>
+                    <TableFooter></TableFooter>
                 </table>
             </div>
-            <div className="p-5 flex justify-between">
+            <div className="p-5 lg:flex justify-between">
                 <div>
                     <p className="text-xl">
                         Showing {`${pageSize * currentPage + 1} `} to{" "}
@@ -143,35 +162,11 @@ const Home = () => {
                         of {usersCount} entries{" "}
                     </p>
                 </div>
-                <div className="btn-group flex py-3 mb-12">
-                    <button
-                        disabled={currentPage === 0}
-                        onClick={() => setCurrentPage(currentPage - 1)}
-                        className="btn btn-success text-black hover:bg-primary hover:text-white"
-                    >
-                        Previous
-                    </button>
-                    {[...Array(pageCount).keys()].map((number) => (
-                        <button
-                            className={
-                                currentPage === number
-                                    ? "btn  bg-primary border-white border-2 hover:bg-primary text-white hover:text-white hover:border-white"
-                                    : "btn bg-white border-0 text-black hover:bg-white/50"
-                            }
-                            onClick={() => setCurrentPage(number)}
-                            key={number}
-                        >
-                            {number + 1}
-                        </button>
-                    ))}
-                    <button
-                        disabled={currentPage + 1 === pageCount}
-                        onClick={() => setCurrentPage(currentPage + 1)}
-                        className="btn  btn-success hover:bg-primary hover:text-white text-black"
-                    >
-                        Next
-                    </button>
-                </div>
+                <PaginationBtn
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    pageCount={pageCount}
+                ></PaginationBtn>
             </div>
         </div>
     );

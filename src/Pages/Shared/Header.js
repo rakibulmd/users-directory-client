@@ -3,18 +3,18 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
     return (
-        <div class="bg-transparent text-white">
+        <div className="bg-transparent text-white">
             <div className="container mx-auto">
                 <div className="navbar">
-                    <div class="">
-                        <div class="dropdown">
+                    <div className="">
+                        <div className="dropdown">
                             <label
                                 tabindex="0"
-                                class="btn btn-ghost btn-circle"
+                                className="btn btn-ghost btn-circle"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-6 w-6"
+                                    className="h-6 w-6"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -29,7 +29,7 @@ const Header = () => {
                             </label>
                             <ul
                                 tabindex="0"
-                                class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 text-primary rounded-box w-52"
+                                className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 text-primary rounded-box w-52"
                             >
                                 <li>
                                     <Link to="/">Homepage</Link>
@@ -43,8 +43,11 @@ const Header = () => {
                             </ul>
                         </div>
                     </div>
-                    <div class="navbar-center">
-                        <Link to="/" class="btn btn-ghost text-xl uppercase">
+                    <div className="navbar-center">
+                        <Link
+                            to="/"
+                            className="btn btn-ghost text-xl uppercase"
+                        >
                             User Directory
                         </Link>
                     </div>
