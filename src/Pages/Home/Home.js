@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../Shared/Header";
 import TableRows from "./TableRows";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
-import usePageCount from "../../Hooks/usePageCount";
 
 const Home = () => {
     const [users, setUsers] = useState([]);
@@ -12,6 +11,14 @@ const Home = () => {
     const [pageSize, setPageSize] = useState(10);
     const [currentPage, setCurrentPage] = useState(0);
     const [usersCount, setUserCount] = useState(0);
+
+    const handlePageSizeChange = (event) => {
+        event.preventDefault();
+        setPageSize(event.target.value);
+        if (pageSize < currentPage) {
+            setCurrentPage(0);
+        }
+    };
 
     const handleNameAscending = (event) => {
         event.preventDefault();
@@ -59,8 +66,20 @@ const Home = () => {
             <div className="text-center text-3xl md:text-5xl mt-12">
                 <h2>All Users</h2>
             </div>
+            <div className="flex justify-start items-center px-5 py-3 gap-2">
+                <span>Show</span>
+                <select
+                    onChange={handlePageSizeChange}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-700 block w-24 p-2.5"
+                >
+                    <option selected>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                </select>
+                <span>entries</span>
+            </div>
             <div class="overflow-x-auto p-5 text-black">
-                <table class="table table-zebra w-full">
+                <table class="table table-zebra table-compact w-full">
                     <thead>
                         <tr>
                             <th

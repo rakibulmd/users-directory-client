@@ -2,7 +2,7 @@ import React from "react";
 
 const TableRows = ({ user }) => {
     return (
-        <tr>
+        <tr className="hover">
             <td>{user?.name}</td>
             <td>{user?.position}</td>
             <td>{user?.address}</td>
