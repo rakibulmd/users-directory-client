@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
-const TableHead = ({ setActiveFilter, activeFilter }) => {
+const TableHead = ({ setActiveFilter, activeFilter, setCurrentPage }) => {
     const tableHeaders = [
         "name",
         "position",
@@ -34,6 +34,7 @@ const TableHead = ({ setActiveFilter, activeFilter }) => {
         // getData();
 
         setActiveFilter(object.filter + "." + object.mode);
+        setCurrentPage(0);
     };
     const createTh = (value) => {
         return (

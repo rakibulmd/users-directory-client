@@ -89,6 +89,7 @@ const Home = () => {
                     <TableHead
                         activeFilter={activeFilter}
                         setActiveFilter={setActiveFilter}
+                        setCurrentPage={setCurrentPage}
                     ></TableHead>
                     <tbody>
                         {users.map((user, i) => (
