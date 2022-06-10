@@ -5,6 +5,7 @@ import TableRows from "./TableRows";
 import PaginationBtn from "../../Components/PaginationBtn";
 import TableFooter from "./TableFooter";
 import TableHead from "./TableHead";
+import Footer from "../Shared/Footer";
 
 const Home = () => {
     const [users, setUsers] = useState([]);
@@ -13,18 +14,11 @@ const Home = () => {
     const [pageSize, setPageSize] = useState(10);
     const [currentPage, setCurrentPage] = useState(0);
     const [usersCount, setUserCount] = useState(0);
-    const [searchValue, setSearchValue] = useState("");
 
     const handlePageSizeChange = (event) => {
         event.preventDefault();
         setPageSize(event.target.value);
     };
-
-    // const handleSearch = (event) => {
-    //     console.log(event.target.value);
-    //     setSearchValue(event.target.value);
-    //     setCurrentPage(0);
-    // };
 
     // const handleNameDescending = (object) => {
     //     const newUsers = users.sort((a, b) =>
@@ -62,8 +56,8 @@ const Home = () => {
 
     return (
         <div className="bg-gradient-to-r from-primary to-secondary min-h-screen text-white">
-            {/* <Header></Header> */}
-            <div className="text-center text-3xl md:text-5xl pt-12 pb-7">
+            <Header></Header>
+            <div className="text-center text-3xl md:text-5xl pt-6 pb-7">
                 <h2>All Users</h2>
             </div>
             <div className="flex justify-between items-center px-5">
@@ -120,6 +114,7 @@ const Home = () => {
                     pageSize={pageSize}
                 ></PaginationBtn>
             </div>
+            <Footer></Footer>
         </div>
     );
 };
