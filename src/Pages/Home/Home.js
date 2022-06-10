@@ -5,6 +5,7 @@ import TableRows from "./TableRows";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import PaginationBtn from "../../Components/PaginationBtn";
 import TableFooter from "../../Components/TableFooter";
+import TableHead from "./TableHead";
 
 const Home = () => {
     const [users, setUsers] = useState([]);
@@ -13,6 +14,7 @@ const Home = () => {
     const [pageSize, setPageSize] = useState(10);
     const [currentPage, setCurrentPage] = useState(0);
     const [usersCount, setUserCount] = useState(0);
+    const [searchValue, setSearchValue] = useState("");
 
     const handlePageSizeChange = (event) => {
         event.preventDefault();
@@ -40,8 +42,14 @@ const Home = () => {
                 .catch((error) => console.log(error));
         };
         getData();
-        setActiveFilter(object.filter + object.mode);
+
+        setActiveFilter(object.filter + "." + object.mode);
     };
+    // const handleSearch = (event) => {
+    //     console.log(event.target.value);
+    //     setSearchValue(event.target.value);
+    //     setCurrentPage(0);
+    // };
 
     // const handleNameDescending = (object) => {
     //     const newUsers = users.sort((a, b) =>
@@ -61,7 +69,7 @@ const Home = () => {
                 .catch((error) => console.log(error));
         };
         getData();
-    }, [currentPage, pageSize]);
+    }, []);
     useEffect(() => {
         const get = async () => {
             const { data } = await axios.get(
@@ -83,65 +91,30 @@ const Home = () => {
             <div className="text-center text-3xl md:text-5xl pt-12">
                 <h2>All Users</h2>
             </div>
-            <div className="flex justify-start items-center px-5 py-3 gap-2">
-                <span>Show</span>
-                <select
-                    onChange={handlePageSizeChange}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-700 block w-24 p-2.5"
-                >
-                    <option>10</option>
-                    <option>25</option>
-                    <option>50</option>
-                </select>
-                <span>entries</span>
+            <div className="flex justify-between items-center p-5">
+                <div className="flex justify-start items-center px-5 py-3 gap-2">
+                    <span>Show</span>
+                    <select
+                        onChange={handlePageSizeChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-700 block w-24 p-2.5"
+                    >
+                        <option>10</option>
+                        <option>25</option>
+                        <option>50</option>
+                    </select>
+                    <span>entries</span>
+                </div>
+                <div>
+                    <label htmlFor="search">Search</label>
+                    <input className="border text-black" type="" />
+                </div>
             </div>
             <div className="overflow-x-auto p-5 text-black">
                 <table className="table table-zebra table-compact w-full">
-                    <thead>
-                        <tr>
-                            <th className="hidden"></th>
-                            <th className="flex items-center justify-between">
-                                <span>Name</span>
-                                <span className="flex flex-col">
-                                    <span>
-                                        <FaCaretUp
-                                            onClick={() =>
-                                                handleFilter({
-                                                    filter: "name",
-                                                    mode: 1,
-                                                })
-                                            }
-                                            className={`${
-                                                activeFilter === "name1"
-                                                    ? "text-gray-900 w-4 h-4 inline"
-                                                    : "text-gray-400 w-4 h-4 inline"
-                                            }`}
-                                        />
-                                    </span>
-                                    <span>
-                                        <FaCaretDown
-                                            onClick={() =>
-                                                handleFilter({
-                                                    filter: "name",
-                                                    mode: -1,
-                                                })
-                                            }
-                                            className={`${
-                                                activeFilter === "name-1"
-                                                    ? "text-gray-900 w-4 h-4 inline"
-                                                    : "text-gray-400 w-4 h-4 inline"
-                                            }`}
-                                        />
-                                    </span>
-                                </span>
-                            </th>
-                            <th>Position</th>
-                            <th>State</th>
-                            <th>Age</th>
-                            <th>Start Date</th>
-                            <th>Salary</th>
-                        </tr>
-                    </thead>
+                    <TableHead
+                        activeFilter={activeFilter}
+                        setActiveFilter={setActiveFilter}
+                    ></TableHead>
                     <tbody>
                         {users.map((user, i) => (
                             <TableRows key={i} user={user}></TableRows>
@@ -163,9 +136,12 @@ const Home = () => {
                     </p>
                 </div>
                 <PaginationBtn
+                    activeFilter={activeFilter}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     pageCount={pageCount}
+                    setUsers={setUsers}
+                    pageSize={pageSize}
                 ></PaginationBtn>
             </div>
         </div>
