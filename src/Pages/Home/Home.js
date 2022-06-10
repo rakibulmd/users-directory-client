@@ -63,11 +63,11 @@ const Home = () => {
     return (
         <div className="bg-gradient-to-r from-primary to-secondary min-h-screen text-white">
             {/* <Header></Header> */}
-            <div className="text-center text-3xl md:text-5xl pt-12">
+            <div className="text-center text-3xl md:text-5xl pt-12 pb-7">
                 <h2>All Users</h2>
             </div>
-            <div className="flex justify-between items-center p-5">
-                <div className="flex justify-start items-center px-5 py-3 gap-2">
+            <div className="flex justify-between items-center px-5">
+                <div className="flex justify-start items-center px-5 gap-2">
                     <span>Show</span>
                     <select
                         onChange={handlePageSizeChange}
@@ -79,12 +79,12 @@ const Home = () => {
                     </select>
                     <span>entries</span>
                 </div>
-                <div>
-                    <label htmlFor="search">Search</label>
-                    <input className="border text-black" type="" />
-                </div>
             </div>
+
             <div className="overflow-x-auto p-5 text-black">
+                <p className="text-white md:hidden">
+                    ** Scroll Horizontally for full view{" "}
+                </p>
                 <table className="table table-zebra table-compact w-full">
                     <TableHead
                         activeFilter={activeFilter}
