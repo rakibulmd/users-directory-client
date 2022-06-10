@@ -12,6 +12,17 @@ const TableHead = ({ setActiveFilter, activeFilter }) => {
         "salary",
     ];
     const handleFilter = (object) => {
+        // let newUsers;
+        // if (object.mode === 1) {
+        //     newUsers = users.sort((a, b) =>
+        //         a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+        //     );
+        // } else if (object.mode === -1) {
+        //     newUsers = users.sort((a, b) =>
+        //         a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1
+        //     );
+        // }
+        // setUsers(newUsers);
         // const getData = async () => {
         //     await axios
         //         .get(

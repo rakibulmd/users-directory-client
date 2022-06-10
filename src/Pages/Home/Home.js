@@ -2,9 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Header from "../Shared/Header";
 import TableRows from "./TableRows";
-import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import PaginationBtn from "../../Components/PaginationBtn";
-import TableFooter from "../../Components/TableFooter";
+import TableFooter from "./TableFooter";
 import TableHead from "./TableHead";
 
 const Home = () => {
@@ -21,30 +20,6 @@ const Home = () => {
         setPageSize(event.target.value);
     };
 
-    const handleFilter = (object) => {
-        // let newUsers;
-        // if (object.mode === 1) {
-        //     newUsers = users.sort((a, b) =>
-        //         a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
-        //     );
-        // } else if (object.mode === -1) {
-        //     newUsers = users.sort((a, b) =>
-        //         a.name.toLowerCase() < b.name.toLowerCase() ? 1 : -1
-        //     );
-        // }
-        // setUsers(newUsers);
-        const getData = async () => {
-            await axios
-                .get(
-                    `http://localhost:5000/customers?page=${currentPage}&pagesize=${pageSize}&mode=${object.mode}&sort=${object.filter}`
-                )
-                .then((response) => setUsers(response.data))
-                .catch((error) => console.log(error));
-        };
-        getData();
-
-        setActiveFilter(object.filter + "." + object.mode);
-    };
     // const handleSearch = (event) => {
     //     console.log(event.target.value);
     //     setSearchValue(event.target.value);
