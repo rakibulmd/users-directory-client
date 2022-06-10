@@ -28,7 +28,7 @@ const PaginationBtn = ({
             const getData = async () => {
                 await axios
                     .get(
-                        `http://localhost:5000/customers?page=${currentPage}&pagesize=${pageSize}&mode=${
+                        `https://assessment-project-server.herokuapp.com/customers?page=${currentPage}&pagesize=${pageSize}&mode=${
                             activeFilter?.split(".")[1]
                         }&sort=${activeFilter?.split(".")[0]}`
                     )
@@ -40,7 +40,7 @@ const PaginationBtn = ({
             const getData = async () => {
                 await axios
                     .get(
-                        `http://localhost:5000/customers?page=${currentPage}&pagesize=${pageSize}
+                        `https://assessment-project-server.herokuapp.com/customers?page=${currentPage}&pagesize=${pageSize}
                     }&sort=${activeFilter?.split(".")[0]}`
                     )
                     .then((response) => setUsers(response.data))

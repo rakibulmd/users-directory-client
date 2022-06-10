@@ -28,21 +28,21 @@ const Home = () => {
     //     setActiveFilter(object.filter + object.mode);
     // };
 
-    useEffect(() => {
-        const getData = async () => {
-            await axios
-                .get(
-                    `http://localhost:5000/customers?page=${currentPage}&pagesize=${pageSize}`
-                )
-                .then((response) => setUsers(response.data))
-                .catch((error) => console.log(error));
-        };
-        getData();
-    }, []);
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         await axios
+    //             .get(
+    //                 `https://assessment-project-server.herokuapp.com/customers?page=${currentPage}&pagesize=${pageSize}`
+    //             )
+    //             .then((response) => setUsers(response.data))
+    //             .catch((error) => console.log(error));
+    //     };
+    //     getData();
+    // }, []);
     useEffect(() => {
         const get = async () => {
             const { data } = await axios.get(
-                `http://localhost:5000/customerCount`
+                `https://assessment-project-server.herokuapp.com/customerCount`
             );
             const pageCountValue = Math.ceil(data.count / pageSize);
             setPageCount(pageCountValue);

@@ -22,7 +22,7 @@ const CreateTable = ({
         // const getData = async () => {
         //     await axios
         //         .get(
-        //             `http://localhost:5000/customers?page=${currentPage}&pagesize=${pageSize}&mode=${object.mode}&sort=${object.filter}`
+        //             `https://assessment-project-server.herokuapp.com/customers?page=${currentPage}&pagesize=${pageSize}&mode=${object.mode}&sort=${object.filter}`
         //         )
         //         .then((response) => setUsers(response.data))
         //         .catch((error) => console.log(error));
